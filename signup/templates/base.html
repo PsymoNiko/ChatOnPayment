@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <title>Signup</title>
+  </head>
+  <body class="flex items-center justify-center min-h-screen bg-gray-50">
+    <div class="w-full max-w-md p-8 bg-white rounded-xl shadow">
+      <h1 class="mb-2 text-center text-3xl font-bold">Create an account</h1>
+      <p class="mb-8 text-center text-muted-foreground">Enter your details to get started</p>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label class="block mb-1" for="email">Email</label>
+          <input class="w-full border rounded px-3 py-2" type="email" name="email" required>
+        </div>
+        <div class="mb-4">
+          <label class="block mb-1" for="phone">Phone Number</label>
+          <input class="w-full border rounded px-3 py-2" type="tel" name="phone" required>
+        </div>
+        <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded" type="submit">
+          Sign Up
+        </button>
+      </form>
+      <p class="text-center text-sm mt-4">
+        Already have an account?
+        <a href="/login" class="text-blue-500 underline">Log in</a>
+      </p>
+    </div>
+  </body>
+</html>

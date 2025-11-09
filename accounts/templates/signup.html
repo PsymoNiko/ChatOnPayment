@@ -1,0 +1,42 @@
+{% load static %}
+
+<form method="POST" class="space-y-4">
+  {% csrf_token %}
+  <div class="space-y-2">
+    <label for="email" class="block text-sm font-medium">Email</label>
+    <input id="email" name="email" type="email" required placeholder="you@example.com"
+           class="w-full rounded-md border border-gray-300 px-3 py-2" />
+  </div>
+  <div class="space-y-2">
+    <label for="phone" class="block text-sm font-medium">Phone Number</label>
+    <input id="phone" name="phone" type="tel" required placeholder="+1 (555) 000-0000"
+           class="w-full rounded-md border border-gray-300 px-3 py-2" />
+  </div>
+  <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+    Sign Up
+  </button>
+</form>
+
+<div class="my-4 flex items-center">
+  <hr class="flex-1 border-t" />
+  <span class="mx-2 text-xs text-gray-400">OR CONTINUE WITH</span>
+  <hr class="flex-1 border-t" />
+</div>
+
+<div class="grid grid-cols-2 gap-3">
+  <button type="button" class="flex items-center justify-center gap-2 border py-2 rounded">
+    <!-- Google icon -->
+    <img src="{% static 'google-icon.svg' %}" alt="Google" class="h-5 w-5" />
+    Gmail
+  </button>
+  <button type="button" class="flex items-center justify-center gap-2 border py-2 rounded">
+    <!-- GitHub icon -->
+    <img src="{% static 'github-icon.svg' %}" alt="GitHub" class="h-5 w-5" />
+    GitHub
+  </button>
+</div>
+
+<div class="text-sm text-center text-gray-400 mt-4">
+  Already have an account?
+  <a href="{% url 'login' %}" class="text-blue-600 underline">Log in</a>
+</div>
