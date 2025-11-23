@@ -9,6 +9,8 @@ services:
     depends_on:
       - accounts
       - payments
+      - chat
+      - basement
     networks:
       - microservices
 
@@ -33,6 +35,38 @@ services:
       context: ./microservices/payments
       dockerfile: Dockerfile
     container_name: payments-service
+    expose:
+      - "8000"
+    networks:
+      - microservices
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  chat:
+    build:
+      context: ./microservices/chat
+      dockerfile: Dockerfile
+    container_name: chat-service
+    expose:
+      - "8000"
+    networks:
+      - microservices
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  basement:
+    build:
+      context: ./microservices/basement
+      dockerfile: Dockerfile
+    container_name: basement-service
     expose:
       - "8000"
     networks:
