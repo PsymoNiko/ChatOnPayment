@@ -155,13 +155,13 @@ async def delete_resume(resume_id: str):
     return {"message": "Resume deleted successfully"}
 
 
-@app.get("/resumes")
+@app.get("/resumes", response_model=List[ResumeResponse])
 async def list_resumes():
     """List all resumes."""
     return [
-        {
-            "resume_id": resume_id,
+        ResumeResponse(
+            resume_id=resume_id,
             **resume
-        }
+        )
         for resume_id, resume in resumes.items()
     ]
