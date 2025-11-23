@@ -3,7 +3,7 @@ Basement Microservice - FastAPI Application
 
 Provides file upload and base model functionality.
 """
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Form
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional, List
@@ -81,8 +81,8 @@ async def readiness_check():
 @app.post("/files/upload", response_model=FileUploadResponse)
 async def upload_file(
     file: UploadFile = File(...),
-    file_tags: Optional[str] = None,
-    bucket_name: str = "chat-bucket"
+    file_tags: Optional[str] = Form(None),
+    bucket_name: str = Form("chat-bucket")
 ):
     """
     Upload a file and optionally create a thumbnail.

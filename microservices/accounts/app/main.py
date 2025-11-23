@@ -118,6 +118,16 @@ async def create_user(user: UserCreate):
     )
 
 
+@app.get("/users/me")
+async def get_current_user(authorization: Optional[str] = Header(None)):
+    """Stub endpoint for current user information."""
+    return {
+        "user_id": "stub-user-id",
+        "username": "stub-user",
+        "message": "This is a stub endpoint. JWT verification not yet implemented."
+    }
+
+
 @app.get("/users/{user_id}", response_model=UserResponse)
 async def get_user(user_id: str):
     """Get user by ID."""
@@ -133,16 +143,6 @@ async def get_user(user_id: str):
         is_admin=user["is_admin"],
         created_at=user["created_at"]
     )
-
-
-@app.get("/users/me")
-async def get_current_user(authorization: Optional[str] = Header(None)):
-    """Stub endpoint for current user information."""
-    return {
-        "user_id": "stub-user-id",
-        "username": "stub-user",
-        "message": "This is a stub endpoint. JWT verification not yet implemented."
-    }
 
 
 @app.get("/accounts/user/{user_id}", response_model=AccountResponse)
