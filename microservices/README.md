@@ -6,8 +6,10 @@ This directory contains the initial microservices scaffold for gradual extractio
 
 The microservices architecture provides isolated, lightweight services with dedicated responsibilities:
 
-- **Accounts Service**: User authentication, authorization, and JWT key distribution
+- **Accounts Service**: User authentication, authorization, account balance management, and transactions
 - **Payments Service**: Payment processing with idempotency support
+- **Chat Service**: Real-time messaging via WebSocket connections
+- **Basement Service**: File upload, thumbnail generation, and category management
 
 ## Directory Structure
 
@@ -17,12 +19,27 @@ microservices/
 │   ├── app/
 │   │   └── main.py          # FastAPI application
 │   ├── tests/
-│   │   └── test_health.py   # Pytest tests
+│   │   ├── test_health.py   # Health check tests
+│   │   └── test_accounts.py # User and account tests
 │   ├── Dockerfile
 │   └── requirements.txt
-└── payments/
+├── payments/
+│   ├── app/
+│   │   └── main.py          # FastAPI application
+│   ├── Dockerfile
+│   └── requirements.txt
+├── chat/
+│   ├── app/
+│   │   └── main.py          # FastAPI application with WebSocket support
+│   ├── tests/
+│   │   └── test_chat.py     # Chat and WebSocket tests
+│   ├── Dockerfile
+│   └── requirements.txt
+└── basement/
     ├── app/
     │   └── main.py          # FastAPI application
+    ├── tests/
+    │   └── test_basement.py # File and category tests
     ├── Dockerfile
     └── requirements.txt
 ```
@@ -41,6 +58,8 @@ The services will be available at:
 - Gateway: http://localhost:8080
 - Accounts: http://localhost:8080/accounts/
 - Payments: http://localhost:8080/payments/
+- Chat: http://localhost:8080/chat/
+- Basement: http://localhost:8080/basement/
 
 ### Stopping Services
 
@@ -60,6 +79,18 @@ docker compose -f docker-compose.micro.yml down
 - `GET /.well-known/jwks.json` - JWKS endpoint (returns empty keys array)
 - `GET /users/me` - Current user information (stub)
 
+#### User Management
+- `POST /users` - Create a new user
+  - Request body: `{"phone_number": "1234567890", "password": "pass", "date_of_birth": "1990-01-01"}`
+  - Returns user details including auto-generated account
+- `GET /users/{user_id}` - Get user by ID
+
+#### Account Management
+- `GET /accounts/user/{user_id}` - Get account for a user
+- `POST /transactions` - Create a transaction between accounts
+  - Request body: `{"sender_id": "acc-id-1", "receiver_id": "acc-id-2", "amount": "100.00"}`
+- `GET /transactions/{transaction_id}` - Get transaction details
+
 ### Payments Service
 
 #### Health & Readiness
@@ -76,6 +107,43 @@ docker compose -f docker-compose.micro.yml down
       -H "Idempotency-Key: unique-key-123" \
       -d '{"amount": 100.00, "currency": "USD", "description": "Test payment"}'
     ```
+
+### Chat Service
+
+#### Health & Readiness
+- `GET /healthz` - Liveness probe
+- `GET /readyz` - Readiness probe
+
+#### Chat & WebSocket
+- `WS /ws/{room_name}` - WebSocket endpoint for real-time chat
+  - Connect to a room and send/receive messages
+  - Message format: `{"message": "text", "phone_number": "user", "avatar": "url"}`
+  - Example:
+    ```javascript
+    const ws = new WebSocket('ws://localhost:8080/chat/ws/test-room');
+    ws.send(JSON.stringify({message: "Hello!", phone_number: "123", avatar: "url"}));
+    ```
+- `GET /rooms/{room_name}/info` - Get room information (active connections count)
+
+### Basement Service
+
+#### Health & Readiness
+- `GET /healthz` - Liveness probe
+- `GET /readyz` - Readiness probe
+
+#### File Management
+- `POST /files/upload` - Upload a file with optional thumbnail generation
+  - Multipart form data with file field
+  - Optional: `file_tags`, `bucket_name` (default: "chat-bucket")
+  - Automatically creates thumbnails for images (except SVG)
+- `GET /files/{file_id}` - Get file information
+
+#### Category Management
+- `POST /categories` - Create a new category
+  - Request body: `{"title": "Category Name", "parent_id": "optional-parent-id"}`
+  - Auto-generates slug and calculates level
+- `GET /categories/{category_id}` - Get category by ID
+- `GET /categories` - List all categories
 
 ## Testing
 
