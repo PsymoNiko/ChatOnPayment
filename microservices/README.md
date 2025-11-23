@@ -10,6 +10,7 @@ The microservices architecture provides isolated, lightweight services with dedi
 - **Payments Service**: Payment processing with idempotency support
 - **Chat Service**: Real-time messaging via WebSocket connections
 - **Basement Service**: File upload, thumbnail generation, and category management
+- **Resume Service**: Resume creation, management, and retrieval
 
 ## Directory Structure
 
@@ -42,6 +43,13 @@ microservices/
     │   └── test_basement.py # File and category tests
     ├── Dockerfile
     └── requirements.txt
+└── resume/
+    ├── app/
+    │   └── main.py          # FastAPI application
+    ├── tests/
+    │   └── test_resume.py   # Resume tests
+    ├── Dockerfile
+    └── requirements.txt
 ```
 
 ## Running the Microservices
@@ -60,6 +68,7 @@ The services will be available at:
 - Payments: http://localhost:8080/payments/
 - Chat: http://localhost:8080/chat/
 - Basement: http://localhost:8080/basement/
+- Resume: http://localhost:8080/resume/
 
 ### Stopping Services
 
@@ -145,6 +154,23 @@ docker compose -f docker-compose.micro.yml down
 - `GET /categories/{category_id}` - Get category by ID
 - `GET /categories` - List all categories
 
+### Resume Service
+
+#### Health & Readiness
+- `GET /healthz` - Liveness probe
+- `GET /readyz` - Readiness probe
+
+#### Resume Management
+- `POST /resumes` - Create a new resume
+  - Request body: `{"user_id": "user-123", "title": "Software Engineer", "summary": "Experienced developer", "skills": ["Python", "FastAPI"], "experience": "5 years", "education": "BS in CS"}`
+  - Returns resume details with auto-generated ID
+- `GET /resumes/{resume_id}` - Get resume by ID
+- `GET /resumes/user/{user_id}` - Get resume by user ID
+- `PUT /resumes/{resume_id}` - Update a resume
+  - Request body: `{"title": "Senior Software Engineer", "skills": ["Python", "FastAPI", "Docker"]}`
+- `DELETE /resumes/{resume_id}` - Delete a resume
+- `GET /resumes` - List all resumes
+
 ## Testing
 
 ### Running Tests for Accounts Service
@@ -159,6 +185,22 @@ All tests should pass:
 - ✅ test_readiness_endpoint
 - ✅ test_jwks_endpoint
 - ✅ test_users_me_stub
+
+### Running Tests for Resume Service
+
+Inside the container:
+```bash
+docker exec resume-service python -m pytest tests/test_resume.py -v
+```
+
+All tests should pass:
+- ✅ test_health_endpoint
+- ✅ test_readiness_endpoint
+- ✅ test_create_resume
+- ✅ test_get_resume
+- ✅ test_update_resume
+- ✅ test_delete_resume
+- ✅ test_list_resumes
 
 ## Architecture Notes
 

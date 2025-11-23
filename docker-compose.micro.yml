@@ -11,6 +11,7 @@ services:
       - payments
       - chat
       - basement
+      - resume
     networks:
       - microservices
 
@@ -67,6 +68,22 @@ services:
       context: ./microservices/basement
       dockerfile: Dockerfile
     container_name: basement-service
+    expose:
+      - "8000"
+    networks:
+      - microservices
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  resume:
+    build:
+      context: ./microservices/resume
+      dockerfile: Dockerfile
+    container_name: resume-service
     expose:
       - "8000"
     networks:
