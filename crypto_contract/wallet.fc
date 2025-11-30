@@ -76,7 +76,6 @@
     var signature = in_msg~load_bits(512);
     
     ;; Get the hash of the remaining message for signature verification
-    slice msg_hash_slice = in_msg;
     int msg_hash = slice_hash(in_msg);
     
     ;; Load message data

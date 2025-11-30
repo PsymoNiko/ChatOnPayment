@@ -11,9 +11,9 @@
         "initial_balance_unit": "TON"
     },
     "owner": {
-        "public_key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "public_key": "REPLACE_WITH_YOUR_256_BIT_PUBLIC_KEY",
         "address": "",
-        "note": "Replace public_key with your actual 256-bit public key before deployment"
+        "note": "IMPORTANT: Replace public_key with your actual 256-bit public key (hex format) before deployment. Never deploy with placeholder value."
     },
     "compilation": {
         "source_file": "wallet.fc",

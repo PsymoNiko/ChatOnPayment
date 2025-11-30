@@ -192,7 +192,7 @@ const seqno = await wallet.methods.seqno().call();
 console.log('Current seqno:', seqno);
 
 // Get owner's public key
-const publicKey = await wallet.methods.getPublicKey().call();
+const publicKey = await wallet.methods.get_public_key().call();
 console.log('Owner public key:', publicKey);
 ```
 

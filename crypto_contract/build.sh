@@ -15,8 +15,9 @@
 #   ./build.sh
 #
 # Output:
-#   - build/wallet.fif  - Compiled Fift assembly
-#   - build/wallet.boc  - Compiled contract (Bag of Cells)
+#   - build/wallet.fif           - Compiled Fift assembly
+#   - build/wallet_code.boc      - Compiled contract code (Bag of Cells)
+#   - build/wallet_state_init.boc - State init for deployment
 # ============================================================================
 
 set -e  # Exit on any error
