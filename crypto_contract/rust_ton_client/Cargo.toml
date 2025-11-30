@@ -1,0 +1,48 @@
+[package]
+name = "ton-wallet-client"
+version = "0.1.0"
+edition = "2021"
+description = "Rust TON SDK client for SimpleWallet contract interactions"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/PsymoNiko/ChatOnPayment"
+keywords = ["ton", "blockchain", "wallet", "crypto"]
+
+[dependencies]
+# TON SDK libraries
+tonlib-core = "0.26"
+
+# Async runtime
+tokio = { version = "1.41", features = ["full"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Hex encoding
+hex = "0.4"
+
+# Error handling
+thiserror = "2.0"
+anyhow = "1.0"
+
+# Logging
+log = "0.4"
+env_logger = "0.11"
+
+# Base64 encoding (for BOC files)
+base64 = "0.22"
+
+# Cryptographic hashing (SHA-256 for TON message signing)
+sha2 = "0.10"
+
+[dev-dependencies]
+tokio-test = "0.4"
+
+[[bin]]
+name = "wallet-cli"
+path = "src/main.rs"
+
+[lib]
+name = "ton_wallet_client"
+path = "src/lib.rs"

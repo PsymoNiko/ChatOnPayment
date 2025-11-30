@@ -10,13 +10,43 @@ The **SimpleWallet** contract provides:
 - **Replay protection**: Uses sequence numbers to prevent transaction replay attacks
 - **Signature verification**: Only the owner can authorize outgoing transfers
 
+## Implementations
+
+This project includes two complementary implementations:
+
+### 1. FunC Smart Contract (`wallet.fc`)
+The on-chain smart contract written in FunC, TON's native programming language. This runs on the TON Virtual Machine (TVM) and handles all blockchain operations.
+
+### 2. Rust SDK Client (`rust_ton_client/`)
+A Rust library and CLI for interacting with the deployed contract. This runs locally and communicates with the TON blockchain via API.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     Architecture Overview                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│   ┌──────────────────┐          ┌───────────────────────────┐   │
+│   │  Rust SDK Client │  HTTP    │   FunC Smart Contract     │   │
+│   │  (rust_ton_client) ├────────►│   (wallet.fc)             │   │
+│   │  - Signs txns    │  API     │   - On-chain execution    │   │
+│   │  - Queries state │          │   - Stores funds          │   │
+│   └──────────────────┘          │   - Verifies signatures   │   │
+│                                  └─────────────┬─────────────┘   │
+│                                                │                 │
+│                           ┌────────────────────▼────────────────┐│
+│                           │         TON Blockchain              ││
+│                           └─────────────────────────────────────┘│
+└─────────────────────────────────────────────────────────────────┘
+```
+
 ## Files
 
-| File | Description |
+| File/Directory | Description |
 |------|-------------|
 | `wallet.fc` | FunC smart contract source code |
-| `build.sh` | Build script to compile the contract |
+| `build.sh` | Build script to compile the FunC contract |
 | `config.json` | Configuration settings for deployment |
+| `rust_ton_client/` | Rust SDK client library and CLI |
 | `README.md` | This documentation file |
 
 ## Prerequisites
@@ -261,3 +291,24 @@ Make sure you have the `stdlib.fc` file available. It's included with the TON co
 ## License
 
 This code is provided as a minimal working example for educational purposes. Use at your own risk.
+
+---
+
+## Rust SDK Client
+
+For developers who prefer Rust, see the [`rust_ton_client/`](./rust_ton_client/) directory for a complete Rust SDK that can:
+
+- Query wallet balances and state
+- Send TON transactions (with proper key management)
+- Deploy wallet contracts
+- Provide a CLI interface
+
+### Quick Start with Rust
+
+```bash
+cd rust_ton_client
+cargo build --release
+./target/release/wallet-cli --help
+```
+
+For more information, see the [Rust SDK README](./rust_ton_client/README.md).
