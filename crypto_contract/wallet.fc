@@ -1,0 +1,128 @@
+;; ============================================================================
+;; Simple TON Wallet Smart Contract
+;; ============================================================================
+;; This is a minimal wallet contract that can receive and send TON coins.
+;; It supports basic operations: receiving funds and sending funds to other
+;; addresses with owner authorization via signature verification.
+;; ============================================================================
+
+;; Storage layout:
+;; - seqno: 32-bit unsigned integer (sequence number for replay protection)
+;; - public_key: 256-bit unsigned integer (owner's public key for authorization)
+
+;; ============================================================================
+;; Standard library imports
+;; ============================================================================
+
+#include "stdlib.fc";
+
+;; ============================================================================
+;; Storage functions
+;; ============================================================================
+
+;; Load contract storage data
+;; Returns: (seqno, public_key)
+(int, int) load_data() inline {
+    var ds = get_data().begin_parse();
+    return (
+        ds~load_uint(32),   ;; seqno - sequence number for replay protection
+        ds~load_uint(256)   ;; public_key - owner's public key
+    );
+}
+
+;; Save contract storage data
+;; Parameters: seqno, public_key
+() save_data(int seqno, int public_key) impure inline {
+    set_data(begin_cell()
+        .store_uint(seqno, 32)
+        .store_uint(public_key, 256)
+        .end_cell()
+    );
+}
+
+;; ============================================================================
+;; Message handlers
+;; ============================================================================
+
+;; recv_internal handles incoming internal messages (from other contracts or wallets)
+;; This function is called when the contract receives TON coins
+() recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
+    ;; Accept all incoming funds - no special processing needed
+    ;; The contract balance will automatically increase
+    
+    ;; If message body is empty, just accept the funds
+    if (in_msg_body.slice_empty?()) {
+        return ();
+    }
+    
+    ;; Parse the incoming message to extract sender address
+    slice cs = in_msg_full.begin_parse();
+    int flags = cs~load_uint(4);
+    
+    ;; Ignore bounced messages
+    if (flags & 1) {
+        return ();
+    }
+    
+    ;; You can add custom internal message handling here
+    ;; For this simple wallet, we just accept all funds
+    return ();
+}
+
+;; recv_external handles incoming external messages (from outside the blockchain)
+;; This is used for sending funds from the wallet
+() recv_external(slice in_msg) impure {
+    ;; Load the signature from the message
+    var signature = in_msg~load_bits(512);
+    
+    ;; Get the hash of the remaining message for signature verification
+    slice msg_hash_slice = in_msg;
+    int msg_hash = slice_hash(in_msg);
+    
+    ;; Load message data
+    int msg_seqno = in_msg~load_uint(32);      ;; Sequence number
+    int valid_until = in_msg~load_uint(32);    ;; Expiration timestamp
+    
+    ;; Load current contract state
+    (int stored_seqno, int public_key) = load_data();
+    
+    ;; Verify sequence number to prevent replay attacks
+    throw_unless(33, msg_seqno == stored_seqno);
+    
+    ;; Verify message hasn't expired
+    throw_unless(34, now() <= valid_until);
+    
+    ;; Verify the signature using the stored public key
+    throw_unless(35, check_signature(msg_hash, signature, public_key));
+    
+    ;; Accept the external message (pay for gas from contract balance)
+    accept_message();
+    
+    ;; Process send operations from the message body
+    ;; Message format: mode (8 bits) + message cell reference
+    while (in_msg.slice_refs_empty?() == 0) {
+        int mode = in_msg~load_uint(8);        ;; Send mode flags
+        cell msg = in_msg~load_ref();          ;; Message to send
+        send_raw_message(msg, mode);           ;; Send the message
+    }
+    
+    ;; Increment sequence number to prevent replay of this message
+    save_data(stored_seqno + 1, public_key);
+}
+
+;; ============================================================================
+;; Get methods (read-only, for querying contract state)
+;; ============================================================================
+
+;; Returns the current sequence number
+;; Used by wallets to determine the next valid seqno for transactions
+int seqno() method_id {
+    (int seqno, _) = load_data();
+    return seqno;
+}
+
+;; Returns the owner's public key
+int get_public_key() method_id {
+    (_, int public_key) = load_data();
+    return public_key;
+}
