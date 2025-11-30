@@ -1,0 +1,36 @@
+{
+    "contract": {
+        "name": "SimpleWallet",
+        "version": "1.0.0",
+        "description": "A minimal TON wallet contract for sending and receiving coins"
+    },
+    "deployment": {
+        "network": "testnet",
+        "workchain": 0,
+        "initial_balance": "0.5",
+        "initial_balance_unit": "TON"
+    },
+    "owner": {
+        "public_key": "REPLACE_WITH_YOUR_256_BIT_PUBLIC_KEY",
+        "address": "",
+        "note": "IMPORTANT: Replace public_key with your actual 256-bit public key (hex format) before deployment. Never deploy with placeholder value."
+    },
+    "compilation": {
+        "source_file": "wallet.fc",
+        "output_dir": "build",
+        "output_files": {
+            "fift_asm": "wallet.fif",
+            "code_boc": "wallet_code.boc",
+            "state_init_boc": "wallet_state_init.boc"
+        }
+    },
+    "testnet": {
+        "api_endpoint": "https://testnet.toncenter.com/api/v2",
+        "explorer": "https://testnet.tonscan.org",
+        "faucet": "https://t.me/testgiver_ton_bot"
+    },
+    "mainnet": {
+        "api_endpoint": "https://toncenter.com/api/v2",
+        "explorer": "https://tonscan.org"
+    }
+}
