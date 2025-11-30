@@ -71,8 +71,8 @@ class WalletClient:
         """
         logger.info("Initializing TON wallet client with custom endpoint: %s", endpoint)
 
-        client = cls.__new__(cls)
-        client._network = Network.TESTNET  # Default to testnet for custom endpoints
+        # Create instance and override the API URL
+        client = cls(Network.TESTNET)  # Default to testnet for custom endpoints
         client._api_url = endpoint
         return client
 

@@ -191,9 +191,10 @@ class Wallet:
             raise ValueError("Message hash must be 32 bytes")
 
         # PLACEHOLDER: In production, use pynacl for proper signing
-        # For now, we create a deterministic placeholder to demonstrate the interface
+        # Using random bytes to avoid predictable signatures
         # DO NOT USE IN PRODUCTION - this is not cryptographically secure
-        signature = message_hash + message_hash  # 64 bytes
+        import os
+        signature = os.urandom(64)
 
         return signature
 

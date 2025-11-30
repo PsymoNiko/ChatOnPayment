@@ -42,7 +42,7 @@ TON smart contracts run on the TON Virtual Machine (TVM) and are written in **Fu
 Install from source:
 
 ```bash
-cd crypto_contract/python_contract
+cd python_contract
 pip install -e .
 ```
 
