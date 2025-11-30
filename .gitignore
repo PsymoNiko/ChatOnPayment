@@ -35,7 +35,7 @@ MANIFEST
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
-
+s3-volume/
 # Unit test / coverage reports
 htmlcov/
 .tox/
