@@ -1,0 +1,20 @@
+# TON Wallet Client Dependencies
+
+# Async support
+aiohttp>=3.9.0
+
+# Cryptographic hashing (SHA-256 for TON message signing)
+hashlib-compat>=1.0.0; python_version < "3.8"
+
+# Hex and Base64 encoding (built into Python stdlib)
+# No external dependencies needed
+
+# Logging (built into Python stdlib)
+# No external dependencies needed
+
+# Optional: Ed25519 signing (for production use)
+# pynacl>=1.5.0
+
+# Development dependencies (install with pip install -e ".[dev]")
+# pytest>=7.0.0
+# pytest-asyncio>=0.21.0
