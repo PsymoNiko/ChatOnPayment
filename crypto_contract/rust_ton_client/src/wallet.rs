@@ -79,20 +79,30 @@ impl Wallet {
     /// Sign a message hash using the wallet's private key
     ///
     /// Returns a 64-byte signature
+    ///
+    /// # Security Note
+    ///
+    /// This is a PLACEHOLDER implementation for demonstration purposes.
+    /// In production, you should use the `ed25519-dalek` or similar crate
+    /// for proper Ed25519 signing as required by TON:
+    ///
+    /// ```rust,ignore
+    /// use ed25519_dalek::{Keypair, Signer};
+    /// let keypair = Keypair::from_bytes(&combined_key_bytes)?;
+    /// let signature = keypair.sign(message_hash);
+    /// ```
     pub fn sign(&self, message_hash: &[u8; 32]) -> Result<[u8; 64], WalletError> {
-        let key_pair = self.key_pair.as_ref().ok_or(WalletError::SignatureError)?;
+        let _key_pair = self.key_pair.as_ref().ok_or(WalletError::SignatureError)?;
         
-        // In a real implementation, this would use ed25519 signing
-        // For now, we'll create a placeholder that demonstrates the interface
+        // PLACEHOLDER: In production, use ed25519_dalek for proper signing
+        // For now, we create a deterministic placeholder to demonstrate the interface
+        // DO NOT USE IN PRODUCTION - this is not cryptographically secure
         let mut signature = [0u8; 64];
         
-        // XOR the message hash with the secret key to create a deterministic output
-        // NOTE: This is NOT cryptographically secure - just a placeholder
-        // Real implementation would use: ed25519_dalek::sign(message_hash, &key_pair.secret_key)
-        for i in 0..32 {
-            signature[i] = message_hash[i] ^ key_pair.secret_key[i];
-            signature[i + 32] = message_hash[i] ^ key_pair.public_key[i];
-        }
+        // Copy message hash twice to create a 64-byte placeholder
+        // This allows the interface to be tested without adding crypto dependencies
+        signature[..32].copy_from_slice(message_hash);
+        signature[32..].copy_from_slice(message_hash);
         
         Ok(signature)
     }
@@ -149,27 +159,23 @@ impl TransferMessage {
     }
 
     /// Compute the hash of this message for signing
+    ///
+    /// # Security Note
+    ///
+    /// This uses SHA-256 as required by TON blockchain for message signing.
     pub fn hash(&self) -> [u8; 32] {
-        use std::collections::hash_map::DefaultHasher;
-        use std::hash::{Hash, Hasher};
+        use sha2::{Sha256, Digest};
         
         let bytes = self.to_bytes();
         
-        // Use a simple hash for demonstration
-        // Real implementation would use SHA-256
-        let mut hasher = DefaultHasher::new();
-        bytes.hash(&mut hasher);
-        let hash_value = hasher.finish();
+        // Use SHA-256 as required by TON
+        let mut hasher = Sha256::new();
+        hasher.update(&bytes);
+        let result = hasher.finalize();
         
-        let mut result = [0u8; 32];
-        let hash_bytes = hash_value.to_be_bytes();
-        
-        // Repeat the 8-byte hash to fill 32 bytes
-        for i in 0..4 {
-            result[i * 8..(i + 1) * 8].copy_from_slice(&hash_bytes);
-        }
-        
-        result
+        let mut hash = [0u8; 32];
+        hash.copy_from_slice(&result);
+        hash
     }
 }
 

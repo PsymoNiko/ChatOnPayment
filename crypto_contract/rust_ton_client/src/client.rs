@@ -83,6 +83,12 @@ impl WalletClient {
     ///
     /// Balance in nanoTON (1 TON = 10^9 nanoTON)
     ///
+    /// # Note
+    ///
+    /// This is currently a mock implementation that returns 0.
+    /// To connect to the actual TON network, integrate with the tonlib-client crate
+    /// or use HTTP requests to the TON Center API.
+    ///
     /// # Example
     ///
     /// ```rust,ignore
@@ -96,29 +102,41 @@ impl WalletClient {
         // Parse and validate the address
         let _parsed = Address::from_friendly(address)?;
         
-        // In a real implementation, this would make an HTTP request to the TON API
-        // For now, we return a mock value to demonstrate the interface
+        // MOCK IMPLEMENTATION: Returns 0
+        // 
+        // To implement actual balance queries, use one of these approaches:
         //
-        // Real implementation would be:
-        // let response = reqwest::get(format!("{}/getAddressBalance?address={}", self.api_url, address))
-        //     .await
-        //     .map_err(|e| WalletError::Network(e.to_string()))?;
-        // let data: serde_json::Value = response.json().await?;
-        // Ok(data["result"].as_str().unwrap().parse().unwrap())
+        // 1. HTTP API (simpler, requires API key for production):
+        //    let url = format!("{}/getAddressBalance?address={}", self.api_url, address);
+        //    let response = reqwest::get(&url).await?;
+        //    let data: serde_json::Value = response.json().await?;
+        //    return Ok(data["result"].as_str().unwrap().parse()?);
+        //
+        // 2. tonlib-client (more complex, direct node connection):
+        //    let client = TonClient::new(...);
+        //    let info = client.get_account_state(address).await?;
+        //    return Ok(info.balance);
         
-        // Mock response for demonstration
+        log::warn!("get_balance: Using mock implementation, returning 0");
         Ok(0)
     }
 
     /// Get the full state of a wallet
     ///
     /// Returns balance, sequence number, and deployment status
+    ///
+    /// # Note
+    ///
+    /// This is currently a mock implementation.
+    /// For production use, integrate with the TON API or tonlib-client.
     pub async fn get_wallet_state(&self, address: &str) -> Result<WalletState, WalletError> {
         debug!("Getting wallet state for: {}", address);
         
         let _parsed = Address::from_friendly(address)?;
         
-        // Mock implementation - real version would query blockchain
+        // MOCK IMPLEMENTATION: Returns placeholder values
+        // In production, query the actual blockchain state
+        log::warn!("get_wallet_state: Using mock implementation");
         Ok(WalletState {
             balance: 0,
             seqno: 0,
