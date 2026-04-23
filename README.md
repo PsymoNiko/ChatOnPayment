@@ -1,11 +1,10 @@
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/PsymoNiko/ChatOnPayment/main/docs/logo.png" alt="ChatOnPayment Logo" width="120"/>
 </p>
 
 <h1 align="center">ChatOnPayment 💬</h1>
 <p align="center">
-  <em>A platform-scale microservices ecosystem for real-time communication & blockchain payments on the TON network.</em>
+  <em>Rust‑powered microservices platform for real‑time chat & TON blockchain payments</em>
 </p>
 
 <p align="center">
@@ -13,127 +12,194 @@
   <img src="https://img.shields.io/github/forks/PsymoNiko/ChatOnPayment?style=for-the-badge&logo=github&color=blue" alt="GitHub Forks">
   <img src="https://img.shields.io/github/license/PsymoNiko/ChatOnPayment?style=for-the-badge&logo=apache" alt="License">
   <img src="https://img.shields.io/badge/microservices-architecture-dodgerblue?style=for-the-badge&logo=serverless" alt="Microservices">
-    <img src="https://img.shields.io/badge/TON-blockchain-0098ea?style=for-the-badge&logo=ton&logoColor=white" alt="TON Blockchain">
+  <img src="https://img.shields.io/badge/TON-blockchain-0098ea?style=for-the-badge&logo=ton&logoColor=white" alt="TON Blockchain">
 </p>
 
-<p align="center">
-    <img src="https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go">
-    <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
-    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
-    <br>
-    <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
-    <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes">
-    <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white" alt="NGINX">
-    <img src="https://img.shields.io/badge/Jaeger-66cfe6?style=for-the-badge&logo=jaeger&logoColor=black" alt="Jaeger">
-    <img src="https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white" alt="Prometheus">
-    <img src="https://img.shields.io/badge/MinIO-FF6C37?style=for-the-badge&logo=minio&logoColor=white" alt="MinIO">
+---
+
+## 🏗️ The Vision: A Self‑Hostable Platform, Not Just an App
+
+**ChatOnPayment** is designed as a production‑grade **platform** – a blueprint for a horizontally scalable, observable, and secure microservices ecosystem. The final goal is a **one‑command deployable** system that provides real‑time chat and payment rails as a service.
+
+---
+
+## 🛠️ Tech Stack (by Category)
+
+### 🦀 Languages & Frameworks
+
+<p>
+  <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rust">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI">
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js">
 </p>
 
-## 🏗️ The Vision: A Self-Hostable Platform, Not Just an App
+### 🗄️ Databases & Storage
 
-**ChatOnPayment** is designed from the ground up as a production-grade platform. My goal is to demonstrate how to build a horizontally scalable, observable, and secure system. This project acts as a blueprint for a microservices ecosystem, where each component is a purposeful building block for a larger platform.
+<p>
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis">
+  <img src="https://img.shields.io/badge/MinIO-FF6C37?style=for-the-badge&logo=minio&logoColor=white" alt="MinIO">
+  <img src="https://img.shields.io/badge/Rustfs_(planned)-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rustfs planned">
+</p>
 
-The final vision is a **one-command deployable platform** that provides real-time chat and payment rails as a service.
+### 🔄 Message Queue & Event Streaming
+
+<p>
+  <img src="https://img.shields.io/badge/Kafka-231F20?style=for-the-badge&logo=apachekafka&logoColor=white" alt="Kafka">
+  <img src="https://img.shields.io/badge/Zookeeper-231F20?style=for-the-badge&logo=apachezookeeper&logoColor=white" alt="Zookeeper">
+</p>
+
+### 🔭 Observability (Tracing, Metrics, Logs)
+
+<p>
+  <img src="https://img.shields.io/badge/Jaeger-66cfe6?style=for-the-badge&logo=jaeger&logoColor=black" alt="Jaeger">
+  <img src="https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white" alt="Prometheus">
+  <img src="https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white" alt="Grafana">
+  <img src="https://img.shields.io/badge/Sentry-362D59?style=for-the-badge&logo=sentry&logoColor=white" alt="Sentry">
+  <img src="https://img.shields.io/badge/Elasticsearch-005571?style=for-the-badge&logo=elasticsearch&logoColor=white" alt="Elasticsearch">
+  <img src="https://img.shields.io/badge/Kibana-005571?style=for-the-badge&logo=kibana&logoColor=white" alt="Kibana">
+  <img src="https://img.shields.io/badge/Logstash-005571?style=for-the-badge&logo=logstash&logoColor=white" alt="Logstash">
+</p>
+
+### 🔐 Authentication & Security
+
+<p>
+  <img src="https://img.shields.io/badge/Keycloak-0078D7?style=for-the-badge&logo=keycloak&logoColor=white" alt="Keycloak">
+  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT">
+  <img src="https://img.shields.io/badge/OAuth-Google/GitHub-4285F4?style=for-the-badge&logo=oauth&logoColor=white" alt="OAuth">
+</p>
+
+### 🐳 Container & Orchestration
+
+<p>
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
+  <img src="https://img.shields.io/badge/Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Compose">
+  <img src="https://img.shields.io/badge/Kubernetes_(planned)-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" alt="Kubernetes planned">
+  <img src="https://img.shields.io/badge/NGINX-009639?style=for-the-badge&logo=nginx&logoColor=white" alt="NGINX">
+</p>
+
+---
 
 ## ✨ Core Engineering Pillars
 
-*   **🏛️ True Microservices Architecture**: Business capabilities are decoupled into independent services.
-*   **⚡️ High-Performance Object Storage**: Powered by MinIO, with a planned evaluation of RustFS—to benchmark against MinIO for potential performance gains in specific workloads, especially for media-heavy chat features.
-*   **🔭 Deep Observability**: Full integration with Jaeger for distributed tracing and Prometheus for metrics.
-*   **⚖️ Intelligent Load Balancing**: NGINX serves as the gateway and reverse proxy.
-*   **🔐 Security by Design**: Every service is designed with authentication and secure communication in mind.
+* **🦀 True Microservices in Rust** – Performance‑critical services (Accounts, Core) are written in Rust for maximum throughput and memory safety.
+* **⚡️ Hybrid Object Storage** – Currently uses **MinIO** (S3‑compatible); planned migration to **Rustfs** (Rust‑native, up to 2.3x faster for small objects) for high‑performance media storage.
+* **🔭 Deep Observability** – Jaeger (tracing), Prometheus (metrics), Grafana (visualisation), Sentry (error tracking), ELK (logs).
+* **⚖️ Event‑Driven Architecture** – Apache Kafka for asynchronous communication between services, with Zookeeper for coordination.
+* **🔐 Enterprise Authentication** – **Keycloak** as identity provider, supporting JWT, OAuth 2.0, and social logins (Google, GitHub).
+* **🧩 Data Separation** – Two PostgreSQL instances: one for application data, one for logs. Redis for caching and session clustering.
+
+---
 
 ## 🗺 Platform Architecture & Evolution Roadmap
 
-The current implementation is **Phase 2** of the roadmap. Each new phase will introduce production-grade patterns.
-
 | Phase | Focus & Deliverables | Key Tools & Patterns |
 | :--- | :--- | :--- |
-| **Phase 1 ✅** | **MVP Launch** | Basic messaging, TON wallet integration, single-instance deployment. |
-| **Phase 2 ✅** *(Current)* | **Containerization & Orchestration Readiness** | Full Docker Compose setup with microservices (Accounts, Chat, Payment, Core). Integrated **Jaeger** for tracing, **Prometheus** for metrics, **MinIO** for object storage, and **NGINX** for routing. |
-| **Phase 3 ⚙️** *(In Progress)* | **Production Hardening** | Move to **Kubernetes** (EKS) with Helm charts. Implement **GitOps** (ArgoCD) and **service mesh** (Istio) for advanced traffic management and security. |
-| **Phase 4 📈** | **Data & Storage at Scale** | Migrate from MinIO to a **RustFS cluster** for high-performance media storage. Implement **PostgreSQL** with master-slave replication for chat history and **Redis** for session clustering and caching. |
-| **Phase 5 🔮** | **The Self-Hostable Platform** | Develop a CLI tool (`ctpctl`) for single-command deployments to any cloud. Package the entire platform as a self-hostable appliance. |
+| **Phase 1 ✅** | MVP Launch | Basic messaging, TON wallet, single‑instance. |
+| **Phase 2 ✅** *(Current)* | **Containerisation & Observability** | Docker Compose with Rust/Python/TS services, Jaeger, Prometheus, MinIO, Kafka, ELK, Sentry, and NGINX. |
+| **Phase 3 ⚙️** *(In Progress)* | **Production Hardening** | Kubernetes (EKS) + Helm, GitOps (ArgoCD), service mesh (Istio). |
+| **Phase 4 📈** | **Storage Migration** | Replace MinIO with **Rustfs cluster**; implement PostgreSQL master‑slave + Redis cluster. |
+| **Phase 5 🔮** | **Self‑Service Platform** | One‑command deployment CLI (`ctpctl`); fully self‑hostable appliance. |
+
+---
 
 ## 🛠️ Deep Dive: Current Tech Stack (Phase 2)
 
-The platform is built as a set of focused, single-responsibility services.
-
 | Service | Language/Framework | Responsibility |
 | :--- | :--- | :--- |
-| **Accounts Service** | Go | User authentication, authorization, and profile management. |
-| **Chat Service** | Python (FastAPI) + WebSockets | Real-time messaging logic, room management, and delivery. |
-| **Payment Service** | TypeScript (Node.js) | TON blockchain interactions, wallet connections, and transaction finality. |
-| **Core Service** | Go | The system orchestrator. Handles service discovery and inter-service communication. |
-| **NGINX** | - | Reverse proxy, SSL termination, and load balancer. |
-| **Jaeger** | - | End-to-end distributed tracing to visualize request flows across services. |
-| **Prometheus** | - | Metrics collection, storage, and alerting for the entire stack. |
-| **MinIO** | - | S3-compatible object storage for chat attachments, media, and transaction receipts. |
+| **Accounts Service** | **Rust** (Actix‑web) | Auth, JWT, OAuth (Google/GitHub via Keycloak), user profiles. |
+| **Chat Service** | Python (FastAPI) + WebSockets | Real‑time messaging, room management. |
+| **Payment Service** | TypeScript (Node.js) | TON blockchain interactions. |
+| **Core Service** | **Rust** (Tokio) | Service discovery, orchestrator. |
+| **NGINX** | - | Reverse proxy, SSL termination, load balancer. |
+| **Keycloak** | - | Identity provider (JWT + OAuth). |
+| **Jaeger** | - | Distributed tracing. |
+| **Prometheus + Grafana** | - | Metrics collection & dashboards. |
+| **Sentry** | - | Error tracking. |
+| **ELK** (Elasticsearch, Logstash, Kibana) | - | Centralised logging (chat logs stored in separate PostgreSQL + ELK). |
+| **Kafka + Zookeeper** | - | Event‑driven communication. |
+| **MinIO** | - | S3‑compatible object storage (attachments, media). |
+| **PostgreSQL ×2** | - | Main database + logs database. |
+| **Redis** | - | Session cache, pub/sub. |
 
-> **💡 A Note on MinIO and RustFS**: MinIO is currently used for its robust S3 compatibility and battle-tested nature. However, I'm investigating **RustFS** for future phases. Built in Rust, RustFS offers impressive performance benchmarks (e.g., `2.3x faster than MinIO for 4KB objects`), and its modern architecture aligns with the performance goals of this platform[reference:0].
+> **📌 Storage Evolution**  
+> Currently `MinIO` handles all object storage. In Phase 4, we will migrate to **Rustfs** – a Rust‑native, high‑performance object store designed for low‑latency media serving. Benchmarks show Rustfs outperforms MinIO by 2.3x for 4KB objects, making it ideal for chat attachments and transaction receipts.
+
+> **🔐 Authentication**  
+> `Keycloak` provides JWT tokens and integrates with Google & GitHub OAuth. All services validate tokens via a shared public key.
+
+---
 
 ## 🚀 Getting Started (You'll be live in minutes)
 
-1.  **Clone & Enter the Repository**:
-    ```bash
-    git clone https://github.com/PsymoNiko/ChatOnPayment.git
-    cd ChatOnPayment
-    ```
+1. **Clone & Enter the Repository**
+   ```bash
+   git clone https://github.com/PsymoNiko/ChatOnPayment.git
+   cd ChatOnPayment
+   ```
 
-2.  **Configure Environment**:
-    ```bash
-    cp .env.sample .env
-    # Edit .env with your configuration
-    ```
+2. **Configure Environment**
+   ```bash
+   cp .env.sample .env
+   # Edit .env with your TON testnet keys, OAuth credentials, etc.
+   ```
 
-3.  **Build & Launch the Ecosystem**:
-    ```bash
-    docker-compose up --build
-    ```
-    This single command builds and starts all 8 services.
+3. **Launch the Entire Ecosystem**
+   ```bash
+   docker-compose up --build
+   ```
+   This starts all 15+ services (Rust, Python, Node, databases, message queue, observability stack).
 
-4.  **Access the Platform**:
-    *   **Chat Interface**: `http://localhost`
-    *   **Jaeger Tracing UI**: `http://localhost:16686`
-    *   **Prometheus Metrics**: `http://localhost:9090`
+4. **Access the Platform**
+   - Chat UI: `http://localhost:8080`
+   - Jaeger Tracing: `http://localhost:16686`
+   - Prometheus: `http://localhost:9090`
+   - Grafana: `http://localhost:3000` (admin/admin)
+   - Kibana: `http://localhost:5601`
+   - Sentry: `http://localhost:9900`
+   - Keycloak Admin: `http://localhost:8080/auth` (admin/admin)
 
-5.  **Stopping the Ecosystem**:
-    ```bash
-    docker-compose down
-    ```
+---
 
 ## 👩‍💻 For Platform Engineers & Contributors
 
-This project is structured as a monorepo for easy development:
+Repository structure (monorepo):
 
 ```text
 ChatOnPayment/
 ├── services/
-│   ├── accounts-service/   (Go)
+│   ├── accounts-service/   (Rust)
 │   ├── chat-service/       (Python/FastAPI)
-│   ├── payment-service/    (TypeScript/Node.js)
-│   └── core-service/       (Go)
+│   ├── payment-service/    (TypeScript/Node)
+│   └── core-service/       (Rust)
 ├── infrastructure/
 │   ├── docker-compose.yml  # Current orchestration
-│   └── k8s/                (Coming soon: K8s manifests)
-└── docs/                   # Architecture diagrams & RFCs
+│   └── k8s/                (Coming soon)
+├── config/
+│   ├── keycloak/           # Realm export
+│   └── prometheus/         # Prometheus config
+└── docs/                   # Architecture diagrams
 ```
 
-I am actively looking for contributions, especially in these areas:
+We welcome contributions in:
+- **Rust microservices** (performance optimisations, new features)
+- **Kubernetes manifests** (moving away from Docker Compose)
+- **Rustfs integration** (storage layer migration)
+- **Load testing** (k6 / Locust scripts)
 
-· Kubernetes & GitOps: Help transition the Docker Compose setup to a production-grade K8s cluster.
-· Blockchain Integrations: Extend the payment service to support other chains.
-· Performance Benchmarking: Help develop load tests (e.g., with k6) to validate system behavior under pressure.
+---
 
-📄 License
+## 📄 License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+MIT © [Ali Mohammadnia](https://github.com/PsymoNiko)
 
 ---
 
 <p align="center">
-  Built with ☕ by <a href="https://github.com/PsymoNiko">Ali Mohammadnia</a>
-  <br>
+  Built with 🦀 & ☕ by <a href="https://github.com/PsymoNiko">Ali Mohammadnia</a><br>
   <em>Platform Engineer • Infrastructure Architect • Open Source Contributor</em>
 </p>
