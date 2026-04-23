@@ -1,0 +1,211 @@
+services:
+  chat_nginx:
+    image: nginx:latest
+    ports:
+      - "85:80"
+      #- "444:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./staticfiles:/code/static
+      #- /home/me/self-signed/fullchain.pem:/etc/ssl/certs/fullchain.pem  # SSL certificate
+      #- /home/me/self-signed/privkey.pem:/etc/ssl/private/privkey.pem  # SSL key
+    depends_on:
+      - django
+    networks:
+      - web_chat
+
+  django:
+    container_name: "django-chat-backend"
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./chat:/code/chat
+      - ./core:/code/core
+      - ./staticfiles:/code/static
+    env_file: ./.env
+    depends_on:
+      - chat_redis
+      - chat_postgres
+    networks:
+      - web_chat
+
+  chat_redis:
+    image: redis:latest
+    ports:
+      - "6372:6379"
+    networks:
+      - web_chat
+
+  chat_postgres:
+    image: harbor.kodepress.ir/global/postgres:16.1
+    container_name: chat-develop-postgres-db-1
+    restart: always
+    environment:
+      - POSTGRES_USER=devAdmin
+      - POSTGRES_PASSWORD=mysecretpassword
+    ports:
+      - "5861:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - web_chat
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devAdmin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  minio:
+    image: harbor.kodepress.ir/global/minio/minio:RELEASE.2025-04-08T15-41-24Z-cpuv1
+    container_name: minio_server
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+      MINIO_VOLUMES: /data
+      MINIO_SERVER_URL: http://localhost:9000
+      MINIO_BROWSER_REDIRECT_URL: http://localhost:9002
+    ports:
+      - "9000:9000"  
+      - "9002:9001"  # Web console
+    volumes:
+      - minio_data:/data
+      # - ./certs:/root/.minio/certs  # for SSL/TLS if you want
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9001/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - web_chat
+
+  mc:
+    image: harbor.kodepress.ir/global/minio/mc:latest 
+    container_name: minio_client
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      sleep 10 &&
+      mc alias set local http://minio:9000 minioadmin minioadmin123 &&
+      mc mb -p local/my-bucket &&
+      mc admin info local &&
+      tail -f /dev/null
+      "
+    networks:
+      - web_chat
+
+
+
+  #elasticsearch:
+  #  image: elasticsearch:7.17.26
+  #  environment:
+  #    - discovery.type=single-node
+  #    - ES_JAVA_OPTS=-Xmx512m -Xms512m
+  #  ports:
+  #    - "9200:9200"
+  #  networks:
+  #    - web_chat
+  #  volumes:
+  #    - ./es_data:/usr/share/elasticsearch/data
+
+  #kibana:
+  #  image: kibana:7.17.26
+  #  environment:
+  #    - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  #  ports:
+  #    - "5601:5601"
+  #  networks:
+  #    - web_chat
+  #  depends_on:
+  #    - elasticsearch
+
+  #kafka:
+  #  image: wurstmeister/kafka:latest
+  #  environment:
+  #    KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093
+  #    KAFKA_LISTENER_SECURITY_PROTOCOL: PLAINTEXT
+  #    KAFKA_LISTENER_NAME_EXTERNAL: INSIDE
+  #    KAFKA_LISTENER_PORT: 9093
+  #    KAFKA_LISTENER_INTERNAL: INSIDE://kafka:9093
+  #    KAFKA_LISTENER_INTERNAL_PORT: 9093
+  #    KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  #    KAFKA_LISTENER_NAME: INSIDE
+  #  ports:
+  #    - "9093:9093"
+  #  networks:
+  #    - web_chat
+  #  depends_on:
+  #    - zookeeper
+
+  #zookeeper:
+  #  image: wurstmeister/zookeeper:latest
+  #  ports:
+  #    - "2181:2181d
+  #  networks:
+  #    - web_chat
+
+  #logstash:
+  #  image: logstash:7.17.26
+  #  environment:
+  #    - LS_JAVA_OPTS=-Xmx512m -Xms512m
+  #  ports:
+  #    - "5044:5044"
+  #  networks:
+  #    - web_chat
+  #  volumes:
+  #    - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+  #  depends_on:
+  #    - kafka
+  #    - elasticsearch
+
+  #prometheus:
+  #  image: prom/prometheus:latest
+  #  ports:
+  #    - "9090:9090"
+  #  volumes:
+  #    - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  #  networks:
+  #    - web_chat
+  #  depends_on:
+  #    - sentry
+  #  command:
+  #    - '--config.file=/etc/prometheus/prometheus.yml'
+
+  #grafana:
+  #  image: grafana/grafana:latest
+  #  ports:
+  #    - "3000:3000"
+  #  environment:
+  #    - GF_SECURITY_ADMIN_PASSWORD=admin  # Set the Grafana admin password
+  #  networks:
+  #    - web_chat
+  #  depends_on:
+  #    - prometheus
+
+  #postgres_exporter:
+  #  image: wrouesnel/postgres_exporter
+  #  environment:
+  #    - DATA_SOURCE_NAME=postgresql://sentry:sentrypassword@postgres:5432/sentry
+  #  ports:
+  #    - "9187:9187"
+  #  networks:
+  #    - web_chat
+  #  depends_on:
+  #    - chat_postgres
+
+
+volumes:
+  postgres_data:
+  minio_data:
+  #logs_postgres_data:
+  #s3-volume:
+  #prometheus_data:
+  #es_data:
+
+networks:
+  web_chat:

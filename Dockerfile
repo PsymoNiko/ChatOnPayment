@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm as builder
+FROM harbor.kodepress.ir/global/python:3.12-slim-bookworm as builder
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir -r develop.txt
 #RUN pip install -r develop.txt
 
 # Final runtime image
-FROM python:3.12-slim-bookworm
+FROM harbor.kodepress.ir/global/python:3.12-slim-bookworm
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \

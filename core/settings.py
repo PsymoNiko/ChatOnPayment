@@ -52,7 +52,7 @@ INSTALLED_APPS = [
 
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost', "https://localhost",
+    'http://localhost', "https://localhost", "http://sentry.kodepress.ir:85", "https://sentry.kodepress.ir:85"
 ]
 
 MIDDLEWARE = [
